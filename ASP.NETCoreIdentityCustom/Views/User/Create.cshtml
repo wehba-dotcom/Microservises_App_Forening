@@ -1,0 +1,64 @@
+﻿@model Bornholm_Sleagts.Areas.Identity.Data.ApplicationUser
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2>Oprette en ny konto.</h2>
+            </div>
+        </div>
+    </div>
+ @using (Html.BeginForm("Create", "User"))
+ {
+        <div class="border p-3 mt-4">
+       
+            
+        
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="mb-3 p-1">
+                    <label asp-for="FirstName" class="p-0"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 p-1">
+                    <label asp-for="LastName" class="p-0"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="mb-3 p-1">
+                <label asp-for="Email" class="p-0"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3 p-1">
+                    <label asp-for="PasswordHash" class="p-0"></label>
+                <input asp-for="PasswordHash" class="form-control" />
+                <span asp-validation-for="PasswordHash" class="text-danger"></span>
+            </div>
+           @* <div class="mb-3 p-1">
+                    <label asp-for="Password" class="p-0"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+                <div class="mb-3 p-1">
+                    <label asp-for="Input.ConfirmPassword" class="p-0"></label>
+                    <input asp-for="SignInManager.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="User.ConfirmPassword" class="text-danger"></span>
+                </div>*@
+           
+            <div class=" row">
+                <div class="col-8 col-md-3">
+                    <button id="registerSubmit" type="submit" class="btn btn-primary w-75">Tilføj</button>
+                </div>
+                <div class="col-8 col-md-3">
+                    <a asp-controller="User" asp-action="Index" class="btn btn-primary w-50">Tilbage</a>
+                </div>
+            </div>
+        </div>
+     
+        
+ }   
+
+
+</div>
+
+   <br/>

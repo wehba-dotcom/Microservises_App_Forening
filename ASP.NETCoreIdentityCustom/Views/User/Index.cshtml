@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "Users";
+}
+@model ICollection<Bornholm_Sleagts.Areas.Identity.Data.ApplicationUser>
+
+
+<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h2 class="text-black-50 pl-3">Liste Brugere</h2>
+        </div>
+    </div>   
+</div>
+<div class="row pt-4">
+    <div class="col-4 text-right">
+        <a asp-controller="User" asp-action="Create" class="btn btn-primary w-50"><i class="bi bi-plus-circle-fill"></i>  Tilføj Ny</a>
+    </div>
+    <div class="col-4 text-">
+        <a asp-controller="Home" asp-action="Index" class="btn btn-primary w-50"><i class="bi bi-backspace"></i>  Tilbage</a>
+    </div>
+</div>
+<div class="text-center">
+   
+    @if ( @Model != null && @Model.Any())
+    {
+        <table class="table table-bordered table-striped-columns">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Fornavn</th>
+                 <th scope="col">Efternavn</th>
+                <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                <th scope="col">Redigere</th>
+                <th scope="col">Slet</th>
+            </tr>
+            </thead>
+            <tbody>
+              @foreach (var user in Model)
+               {
+               <tr>
+                <th scope="row">@user.Id</th>
+                <td>@user.FirstName</td>
+                <td>@user.LastName</td>
+                <td>@user.Email</td>
+                        <td>@user.</td>
+                        <td>
+                            <div class=" btn-group" role="group">
+                                <a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>  Redigere</a>
+                             </div>
+                        </td>
+                        <td >
+                            <div>
+                                <a asp-controller="User" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger mx-1"><i class="bi bi-trash3"></i> Slet</a>
+                            </div>
+
+                        </td>
+               </tr>
+              }
+            </tbody>
+        </table>
+    }
+</div>
+<br/>

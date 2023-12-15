@@ -1,0 +1,59 @@
+﻿@page
+
+@model CreateModel
+@{
+    ViewData["Title"] = "Registrere";
+}
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+<h1>@ViewData["Title"]</h1>
+
+
+
+   <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrls" method="post">
+        <div class="border p-3 mt-4">
+            <div class="row pb-2">
+                <h2>Oprette en ny konto.</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="mb-3 p-1"> 
+                    <label asp-for="Inputs.FirstName" class="p-0"></label>
+                    <input asp-for="Inputs.FirstName" class="form-control" />
+                    <span asp-validation-for="Inputs.FirstName" class="text-danger"></span>
+                </div>
+                <div class="mb-3 p-1">
+                    <label asp-for="Inputs.LastName" class="p-0"></label>
+                    <input asp-for="Inputs.LastName" class="form-control" />
+                    <span asp-validation-for="Inputs.LastName" class="text-danger"></span>
+                </div>
+                <div class="mb-3 p-1">
+                    <label asp-for="Inputs.Email" class="p-0"></label>
+                    <input asp-for="Inputs.Email" class="form-control" />
+                    <span asp-validation-for="Inputs.Email" class="text-danger"></span>
+                </div>
+                <div class="mb-3 p-1">
+                    <label asp-for="Inputs.Password" class="p-0"></label>
+                    <input asp-for="Inputs.Password" class="form-control" />
+                    <span asp-validation-for="Inputs.Password" class="text-danger"></span>
+                </div>
+                <div class="mb-3 p-1">
+                    <label asp-for="Inputs.ConfirmPassword" class="p-0"></label>
+                    <input asp-for="Inputs.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Inputs.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class=" row">
+                    <div class="col-8 col-md-3">
+                        <button id="registerSubmit" type="submit" class="btn btn-info w-75">Registrere</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+        @section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
