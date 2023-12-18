@@ -1,5 +1,6 @@
-﻿@model IEnumerable<FælesbasesService.Models.Feallesbase>
-@* @{
+﻿@using FælesbasesService.Models;
+@model IEnumerable<FælesbasesService.Models.Feallesbase>
+@{
     ViewData["Title"] = "Index";
     Pager pager = new Pager();
     int pageNo = 0;
@@ -8,7 +9,7 @@
         pager = ViewBag.Pager;
         pageNo = pager.CurrentPage;
     }
-} *@
+}
 
 <div class="card-header bg-secondary bg-gradient ml-0 py-3">
     <div class="row">
@@ -39,33 +40,35 @@
 <hr />
 <br />
 
-
-   @*  <ul class="pagination justify-content-end">
-        
-        
+@if (pager.TotalPages > 0)
+{
+    <ul class="pagination justify-content-end">
+        @if (pager.CurrentPage > 1)
+        {
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="1">First</a>
             </li>
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@(pager.CurrentPage-1)">Previouse</a>
             </li>
-        
-       
-            <li>
+        }
+        @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+        {
+            <li class="page-item @(pge == pager.CurrentPage? "active":"")">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@pge">@pge</a>
             </li>
-        
-        
-        
+        }
+        @if (pager.CurrentPage < pager.TotalPages)
+        {
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@(pager.CurrentPage+1)">Next</a>
             </li>
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
             </li>
-        
-    </ul> *@
-
+        }
+    </ul>
+}
 
 
 
@@ -153,31 +156,35 @@ else
 }
 
 
-
-   @*  <ul class="pagination justify-content-end">
-       
-        
+@if (pager.TotalPages > 0)
+{
+    <ul class="pagination justify-content-end">
+        @if (pager.CurrentPage > 1)
+        {
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="1">First</a>
             </li>
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@(pager.CurrentPage-1)">Previouse</a>
             </li>
-        
-            <li >
+        }
+        @for (var pge = pager.StartPage; pge <= pager.EndPage; pge++)
+        {
+            <li class="page-item @(pge == pager.CurrentPage? "active":"")">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@pge">@pge</a>
             </li>
-        
-       
+        }
+        @if (pager.CurrentPage < pager.TotalPages)
+        {
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@(pager.CurrentPage+1)">Next</a>
             </li>
             <li class="page-item ">
                 <a class="page-link" asp-controller="Feallesbase" asp-action="Index" asp-route-pg="@(pager.TotalPages)">Last</a>
             </li>
-        
-    </ul> *@
-
+        }
+    </ul>
+}
 <br />
 
 

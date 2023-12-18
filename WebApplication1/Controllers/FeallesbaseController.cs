@@ -18,11 +18,11 @@ namespace FælesbasesService.Controllers
         }
         ////[Authorize( "Admin")]
         //[Authorize(Policy = "RequireManager")]
-        public IActionResult Index(string? Firstname,DateTime? DoedDato, int pg = 1)
+        public IActionResult Index(string? Firstname,DateTime? DoedDato, int pg )
         {
            // ViewData["DateSortParm"] = Firstname == "DateTime" ? "Avisdato" : "DateTime";
             var objList = from b in _db.Feallesbases select b;
-           
+
             if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
             {
                 objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
@@ -36,7 +36,7 @@ namespace FælesbasesService.Controllers
             {
                 objList = objList.Where(b => b.Fornavne.Contains(Firstname));
             }
-            
+
             const int pageSize = 5;
             if (pg < 1)
             {
@@ -47,7 +47,7 @@ namespace FælesbasesService.Controllers
             int resSkip = (pg - 1) * pageSize;
             var data = objList.Skip(resSkip).Take(pager.PageSize).ToList();
             this.ViewBag.Pager = pager;
-          
+
 
             return View(data);
         }
