@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "bornholm_sleagts": "StartDebugging",
+        "testservice": "StartDebugging",
+        "webapplication2": "StartDebugging",
+        "webapplication1": "StartDebugging"
+      }
+    }
+  }
+}

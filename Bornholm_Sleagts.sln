@@ -5,13 +5,9 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bornholm_Sleagts", "ASP.NETCoreIdentityCustom\Bornholm_Sleagts.csproj", "{EA6B63C8-3F1A-407C-8D4E-13789111C192}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sleagtes.DataAccess", "Sleagtes.DataAccess\Sleagtes.DataAccess.csproj", "{F3F50DA1-6A34-4871-88F3-5B5FEA273F30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{B1F55DC3-9377-46DC-8EAF-BF19D9D80BE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Slleagtes.Models", "Slleagtes.Models\Slleagtes.Models.csproj", "{D2A1DDC2-DC54-4BFD-B3BB-4864519B1E3D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sleagtes.Utility", "Sleagtes.Utility\Sleagtes.Utility.csproj", "{FCE239C2-453E-410C-901C-5942C6DAC9A7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FælesbasesService", "WebApplication1\FælesbasesService.csproj", "{B1F55DC3-9377-46DC-8EAF-BF19D9D80BE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{E904B81A-7B22-4E6D-8E94-0285F123A890}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,22 +19,14 @@ Global
 		{EA6B63C8-3F1A-407C-8D4E-13789111C192}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA6B63C8-3F1A-407C-8D4E-13789111C192}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA6B63C8-3F1A-407C-8D4E-13789111C192}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3F50DA1-6A34-4871-88F3-5B5FEA273F30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3F50DA1-6A34-4871-88F3-5B5FEA273F30}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3F50DA1-6A34-4871-88F3-5B5FEA273F30}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3F50DA1-6A34-4871-88F3-5B5FEA273F30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D2A1DDC2-DC54-4BFD-B3BB-4864519B1E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D2A1DDC2-DC54-4BFD-B3BB-4864519B1E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D2A1DDC2-DC54-4BFD-B3BB-4864519B1E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D2A1DDC2-DC54-4BFD-B3BB-4864519B1E3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCE239C2-453E-410C-901C-5942C6DAC9A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCE239C2-453E-410C-901C-5942C6DAC9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCE239C2-453E-410C-901C-5942C6DAC9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCE239C2-453E-410C-901C-5942C6DAC9A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1F55DC3-9377-46DC-8EAF-BF19D9D80BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1F55DC3-9377-46DC-8EAF-BF19D9D80BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F55DC3-9377-46DC-8EAF-BF19D9D80BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F55DC3-9377-46DC-8EAF-BF19D9D80BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E904B81A-7B22-4E6D-8E94-0285F123A890}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E904B81A-7B22-4E6D-8E94-0285F123A890}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E904B81A-7B22-4E6D-8E94-0285F123A890}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E904B81A-7B22-4E6D-8E94-0285F123A890}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

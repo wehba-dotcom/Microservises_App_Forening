@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 
-namespace WebApplication1.Models
+namespace FælesbasesService.Models
 {
 
     public class Feallesbase

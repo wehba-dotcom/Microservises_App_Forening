@@ -1,13 +1,14 @@
 ﻿
-using FælesbasesService.Models;
+using WebApplication1.Models;
 using Microsoft.AspNetCore.Mvc;
 using EntityState = Microsoft.EntityFrameworkCore.EntityState;
 
 using String = System.String;
-using FælesbasesService.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authorization;
+using WebApplication1.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace FælesbasesService.Controllers
+namespace WebApplication1.Controllers
 {
     public class FeallesbaseController : Controller
     {
@@ -18,7 +19,7 @@ namespace FælesbasesService.Controllers
         }
         ////[Authorize( "Admin")]
         //[Authorize(Policy = "RequireManager")]
-        public IActionResult Index(string? Firstname,DateTime? DoedDato, int pg )
+        public async Task<IActionResult> Index(string? Firstname,DateTime? DoedDato, int pg )
         {
            // ViewData["DateSortParm"] = Firstname == "DateTime" ? "Avisdato" : "DateTime";
             var objList = from b in _db.Feallesbases select b;
@@ -37,7 +38,7 @@ namespace FælesbasesService.Controllers
                 objList = objList.Where(b => b.Fornavne.Contains(Firstname));
             }
 
-            const int pageSize = 5;
+            const int pageSize = 2000;
             if (pg < 1)
             {
                 pg = 1;
@@ -45,7 +46,7 @@ namespace FælesbasesService.Controllers
             int recsCount = objList.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int resSkip = (pg - 1) * pageSize;
-            var data = objList.Skip(resSkip).Take(pager.PageSize).ToList();
+            var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
             this.ViewBag.Pager = pager;
 
 

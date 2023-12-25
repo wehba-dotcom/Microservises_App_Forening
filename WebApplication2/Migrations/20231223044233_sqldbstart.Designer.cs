@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WebApplication1.Data;
+using WebApplication2;
 
 #nullable disable
 
-namespace FælesbasesService.Migrations
+namespace WebApplication2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231215113512_initserviceone")]
-    partial class initserviceone
+    [Migration("20231223044233_sqldbstart")]
+    partial class sqldbstart
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace FælesbasesService.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("FælesbasesService.Models.Feallesbase", b =>
+            modelBuilder.Entity("WebApplication2.Models.Feallesbase", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()

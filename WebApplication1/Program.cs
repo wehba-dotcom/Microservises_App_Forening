@@ -1,5 +1,6 @@
-using FælesbasesService.Areas.Identity.Data;
+
 using Microsoft.EntityFrameworkCore;
+using WebApplication1.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
