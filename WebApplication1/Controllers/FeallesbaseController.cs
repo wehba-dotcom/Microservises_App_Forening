@@ -40,7 +40,7 @@ namespace Bornholm_Slægts.Controllers
             var client = _clientFactory.CreateClient("MyClient");
 
             // Forming a GET request with query parameters
-            var request = new HttpRequestMessage(HttpMethod.Get, $"http://WebApplication/Feallesbase");
+            var request = new HttpRequestMessage(HttpMethod.Get, $"http://FeallesService/Feallesbase");
             var response = await client.SendAsync(request);
             var result = await response.Content.ReadAsStringAsync();
 
