@@ -16,6 +16,7 @@ using Bornholm_Sleagts.Models;
 using Microsoft.AspNetCore.Authorization;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Newtonsoft.Json;
+using DocumentFormat.OpenXml.InkML;
 
 namespace Bornholm_Slægts.Controllers
 {
@@ -46,7 +47,7 @@ namespace Bornholm_Slægts.Controllers
                 objList = objList.Where(b => b.Fornavne.Contains(Firstname));
             }
 
-            const int pageSize = 2000;
+            const int pageSize = 0;
             if (pg < 1)
             {
                 pg = 1;
@@ -54,7 +55,9 @@ namespace Bornholm_Slægts.Controllers
             int recsCount = objList.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int resSkip = (pg - 1) * pageSize;
-            var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
+            var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
+
+            var data =  objLists.ToList();
             this.ViewBag.Pager = pager;
 
 

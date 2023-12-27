@@ -39,7 +39,9 @@ namespace FeallesService.Controllers
             int recsCount = objList.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int resSkip = (pg - 1) * pageSize;
-            var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
+            var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
+
+            var data = objLists.ToList();
             return Ok(data);
         }
 
