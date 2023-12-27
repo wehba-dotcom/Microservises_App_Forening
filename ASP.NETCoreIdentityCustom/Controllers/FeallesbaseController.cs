@@ -21,43 +21,44 @@ namespace Bornholm_Slægts.Controllers
 {
     public class FeallesbaseController : Controller
     {
-        private readonly IHttpClientFactory _clientFactory;
-
-        public FeallesbaseController(IHttpClientFactory clientFactory)
+        private readonly ApplicationDbContext _db;
+        public FeallesbaseController(ApplicationDbContext db)
         {
-            _clientFactory = clientFactory;
+            _db = db;
         }
 
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
         {
-            return View();
-        }
+            // ViewData["DateSortParm"] = Firstname == "DateTime" ? "Avisdato" : "DateTime";
+            var objList = from b in _db.Feallesbases select b;
 
-
-        public async Task<IActionResult> GetBases()
-        {
-            // Creating an HTTP client instance
-            var client = _clientFactory.CreateClient("MyClient");
-
-            // Forming a GET request with query parameters
-            var request = new HttpRequestMessage(HttpMethod.Get, $"http://WebApplication2/Feallesbase/GetFeallesbases");
-            var response = await client.SendAsync(request);
-            var result = await response.Content.ReadAsStringAsync();
-
-            // Handling non-success status codes
-            if (!response.IsSuccessStatusCode)
+            if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
             {
-                ViewBag.Alert = $"Noget er galt! Grunden: {response.ReasonPhrase}";
-                return View("Index");
+                objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
+
+            }
+            else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            {
+                objList = objList.Where(b => b.Doedsdato == DoedDato);
+            }
+            else if (!String.IsNullOrEmpty(Firstname) && DoedDato == null)
+            {
+                objList = objList.Where(b => b.Fornavne.Contains(Firstname));
             }
 
-            // Deserializing response content into BMI object and rounding off the BMI value
-            var bmiObj = JsonConvert.DeserializeObject<Feallesbase>(result);
+            const int pageSize = 2000;
+            if (pg < 1)
+            {
+                pg = 1;
+            }
+            int recsCount = objList.Count();
+            var pager = new Pager(recsCount, pg, pageSize);
+            int resSkip = (pg - 1) * pageSize;
+            var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
+            this.ViewBag.Pager = pager;
 
 
-
-            return View("Index");
+            return View(data);
         }
 
         //public IActionResult Create()

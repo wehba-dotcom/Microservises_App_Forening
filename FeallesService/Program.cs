@@ -1,30 +1,21 @@
-
+using FeallesService.Data;
 using Microsoft.EntityFrameworkCore;
-using WebApplication2;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+
+// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");
-
-
-
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddControllers();
 
+builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
-builder.Services.AddHttpClient("MyClient", client =>
-{
-    // Set the timeout to 30 seconds (or any other duration you prefer)
-    client.Timeout = TimeSpan.FromSeconds(30);
-});
 
 var app = builder.Build();
 

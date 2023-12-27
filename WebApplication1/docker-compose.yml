@@ -1,7 +1,15 @@
 version: '3.9'
 
 services:
-  webapplication1:
+ feallesservice:
+    build:
+      context: .
+      dockerfile: FeallesService/Dockerfile
+    deploy:
+      replicas: 2
+    restart:
+      on-failure
+ webapplication:
     build:
       context: .
       dockerfile: WebApplication1/Dockerfile
