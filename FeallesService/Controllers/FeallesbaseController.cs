@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using FeallesService.Models;
 using FeallesService.Data;
 using FeallesService.Utility;
+using System.Net.Sockets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace FeallesService.Controllers
 {
@@ -12,26 +14,25 @@ namespace FeallesService.Controllers
     public class FeallesbaseController : ControllerBase
 
     {
-        private static readonly string[] Summaries = new[]
-       {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-       };
+       
 
         private readonly AppDbContext _db;
-        private readonly ILogger<FeallesbaseController> _logger;
-        public FeallesbaseController(ILogger<FeallesbaseController> logger,AppDbContext db)
+      
+        public FeallesbaseController(AppDbContext db)
         {
             _db = db;
-            _logger = logger;
+           
         }
 
         // GET: api/Feallesbase
         [HttpGet]
         public async Task<ActionResult> GetFeallesbases()
         {
+           
+                Console.WriteLine("We are here");
             var objList = from b in _db.Feallesbases select b;
-            const int pageSize = 2;
-            int pg = 1;
+            const int pageSize = 5;
+            int pg = 0;
             if (pg < 1)
             {
                 pg = 1;
@@ -39,10 +40,30 @@ namespace FeallesService.Controllers
             int recsCount = objList.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int resSkip = (pg - 1) * pageSize;
-            var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
+            // var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
 
-            var data = objLists.ToList();
-            return Ok(data);
+            try
+            {
+                
+                    var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
+
+                    // Process 'data' or return it as needed
+                    return Ok(data); // Return HTTP 200 OK with the 'data'
+                }
+    catch (SocketException ex)
+            {
+                // Handle SocketException specifically
+                // You might want to log the error or provide a custom error message
+                return StatusCode(500, $"SocketException occurred: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                // For instance, log the error or return a general error message
+                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
+            }
+
+
         }
 
         // GET: api/Feallesbase/5

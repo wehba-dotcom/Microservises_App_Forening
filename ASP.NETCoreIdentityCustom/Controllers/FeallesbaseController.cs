@@ -47,7 +47,7 @@ namespace Bornholm_Slægts.Controllers
                 objList = objList.Where(b => b.Fornavne.Contains(Firstname));
             }
 
-            const int pageSize = 0;
+            const int pageSize = 5;
             if (pg < 1)
             {
                 pg = 1;
