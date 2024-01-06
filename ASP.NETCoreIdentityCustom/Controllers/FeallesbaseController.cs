@@ -20,49 +20,120 @@ using DocumentFormat.OpenXml.InkML;
 
 namespace Bornholm_Slægts.Controllers
 {
+   
+
+   
     public class FeallesbaseController : Controller
     {
-        private readonly ApplicationDbContext _db;
-        public FeallesbaseController(ApplicationDbContext db)
+
+
+        private readonly IHttpClientFactory _httpClientFactory;
+        public FeallesbaseController(IHttpClientFactory httpClientFactory)
         {
-            _db = db;
+            _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
+       
+
+       public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
         {
-            // ViewData["DateSortParm"] = Firstname == "DateTime" ? "Avisdato" : "DateTime";
-            var objList = from b in _db.Feallesbases select b;
+            var client = _httpClientFactory.CreateClient("MyClient");
 
-            if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
-            {
-                objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
 
-            }
-            else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            var request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:8000/Feallesbase");
+
+            var response = await client.SendAsync(request);
+
+            var result = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
             {
-                objList = objList.Where(b => b.Doedsdato == DoedDato);
-            }
-            else if (!String.IsNullOrEmpty(Firstname) && DoedDato == null)
-            {
-                objList = objList.Where(b => b.Fornavne.Contains(Firstname));
+                ViewBag.Alert = $"Noget er galt! Grunden: {response.ReasonPhrase}";
+                return View();
             }
 
-            const int pageSize = 5;
+           // var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
+            List<Feallesbase>? convert = JsonConvert.DeserializeObject<List<Feallesbase>>(result) as List<Feallesbase>;
+
+
+            //if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            //{
+            //    objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
+
+            //}
+            //else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            //{
+            //    objList = objList.Where(b => b.Doedsdato == DoedDato);
+            //}
+            //else if (!String.IsNullOrEmpty(Firstname) && DoedDato == null)
+            //{
+            //    objList = objList.Where(b => b.Fornavne.Contains(Firstname));
+            //}
+
+            const int pageSize = 3;
             if (pg < 1)
             {
                 pg = 1;
             }
-            int recsCount = objList.Count();
+            int recsCount = convert.Count();
             var pager = new Pager(recsCount, pg, pageSize);
             int resSkip = (pg - 1) * pageSize;
-            var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
+            var data = convert.Skip(resSkip).Take(pager.PageSize).ToList();
 
-            var data =  objLists.ToList();
+            //var data = objLists.ToList();
             this.ViewBag.Pager = pager;
 
-
             return View(data);
+
+
+
+
+
+
         }
+
+    }
+        //private readonly ApplicationDbContext _db;
+        //public FeallesbaseController(ApplicationDbContext db)
+        //{
+        //    _db = db;
+        //}
+
+        //public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
+        //{
+        //    // ViewData["DateSortParm"] = Firstname == "DateTime" ? "Avisdato" : "DateTime";
+        //    var objList = from b in _db.Feallesbases select b;
+
+        //    if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
+        //    {
+        //        objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
+
+        //    }
+        //    else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
+        //    {
+        //        objList = objList.Where(b => b.Doedsdato == DoedDato);
+        //    }
+        //    else if (!String.IsNullOrEmpty(Firstname) && DoedDato == null)
+        //    {
+        //        objList = objList.Where(b => b.Fornavne.Contains(Firstname));
+        //    }
+
+        //    const int pageSize = 5;
+        //    if (pg < 1)
+        //    {
+        //        pg = 1;
+        //    }
+        //    int recsCount = objList.Count();
+        //    var pager = new Pager(recsCount, pg, pageSize);
+        //    int resSkip = (pg - 1) * pageSize;
+        //    var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
+
+        //    var data =  objLists.ToList();
+        //    this.ViewBag.Pager = pager;
+
+
+        //    return View(data);
+        //}
 
         //public IActionResult Create()
         //{
@@ -178,6 +249,6 @@ namespace Bornholm_Slægts.Controllers
         //    }
         //    return View();
         //}
-    }
+    
 }
 

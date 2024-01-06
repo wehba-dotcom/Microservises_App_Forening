@@ -16,6 +16,13 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Configure HttpClient with a timeout
+builder.Services.AddHttpClient("MyClient", client =>
+{
+    // Set the timeout to 30 seconds (or any other duration you prefer)
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("MyClient");
