@@ -50,105 +50,25 @@ namespace FeallesMvcService.Controllers
             }
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-        //        // GET: api/Feallesbases
-        //        [HttpGet]
-        //        public async Task<ActionResult<IEnumerable<Feallesbase>>> GetFeallesbase()
-        //        {
-        //          if (_context.Feallesbase == null)
-        //          {
-        //              return NotFound();
-        //          }
-        //            return await _context.Feallesbase.ToListAsync();
-        //        }
+        [HttpPost]
+        public IActionResult Create(Feallesbase feallesbase)
+        {
 
-        //        // GET: api/Feallesbases/5
-        //        [HttpGet("{id}")]
-        //        public async Task<ActionResult<Feallesbase>> GetFeallesbase(int id)
-        //        {
-        //          if (_context.Feallesbase == null)
-        //          {
-        //              return NotFound();
-        //          }
-        //            var feallesbase = await _context.Feallesbase.FindAsync(id);
+            if (ModelState.IsValid)
+            {
+                _context.Feallesbases.Add(feallesbase);
+                _context.SaveChanges();
+                TempData["success"] = "En annonccer tilføjet successfully";
+                return RedirectToAction("Index");
+            }
+            return View();
 
-        //            if (feallesbase == null)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            return feallesbase;
-        //        }
-
-        //        // PUT: api/Feallesbases/5
-        //        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //        [HttpPut("{id}")]
-        //        public async Task<IActionResult> PutFeallesbase(int id, Feallesbase feallesbase)
-        //        {
-        //            if (id != feallesbase.ID)
-        //            {
-        //                return BadRequest();
-        //            }
-
-        //            _context.Entry(feallesbase).State = EntityState.Modified;
-
-        //            try
-        //            {
-        //                await _context.SaveChangesAsync();
-        //            }
-        //            catch (DbUpdateConcurrencyException)
-        //            {
-        //                if (!FeallesbaseExists(id))
-        //                {
-        //                    return NotFound();
-        //                }
-        //                else
-        //                {
-        //                    throw;
-        //                }
-        //            }
-
-        //            return NoContent();
-        //        }
-
-        //        // POST: api/Feallesbases
-        //        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        //        [HttpPost]
-        //        public async Task<ActionResult<Feallesbase>> PostFeallesbase(Feallesbase feallesbase)
-        //        {
-        //          if (_context.Feallesbase == null)
-        //          {
-        //              return Problem("Entity set 'AppDbContext.Feallesbase'  is null.");
-        //          }
-        //            _context.Feallesbase.Add(feallesbase);
-        //            await _context.SaveChangesAsync();
-
-        //            return CreatedAtAction("GetFeallesbase", new { id = feallesbase.ID }, feallesbase);
-        //        }
-
-        //        // DELETE: api/Feallesbases/5
-        //        [HttpDelete("{id}")]
-        //        public async Task<IActionResult> DeleteFeallesbase(int id)
-        //        {
-        //            if (_context.Feallesbase == null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            var feallesbase = await _context.Feallesbase.FindAsync(id);
-        //            if (feallesbase == null)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            _context.Feallesbase.Remove(feallesbase);
-        //            await _context.SaveChangesAsync();
-
-        //            return NoContent();
-        //        }
-
-        //        private bool FeallesbaseExists(int id)
-        //        {
-        //            return (_context.Feallesbase?.Any(e => e.ID == id)).GetValueOrDefault();
-        //        }
+        }
+                       
     }
 }

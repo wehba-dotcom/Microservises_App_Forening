@@ -17,12 +17,13 @@ using Microsoft.AspNetCore.Authorization;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Newtonsoft.Json;
 using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2016.Excel;
 
 namespace Bornholm_Slægts.Controllers
 {
-   
 
-   
+
+
     public class FeallesbaseController : Controller
     {
 
@@ -33,9 +34,9 @@ namespace Bornholm_Slægts.Controllers
             _httpClientFactory = httpClientFactory;
         }
 
-       
+        [Authorize(Policy = "RequireManager")]
 
-       public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
+        public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
         {
             var client = _httpClientFactory.CreateClient("MyClient");
 
@@ -52,13 +53,13 @@ namespace Bornholm_Slægts.Controllers
                 return View();
             }
 
-           // var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
+            // var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
             List<Feallesbase>? convert = JsonConvert.DeserializeObject<List<Feallesbase>>(result) as List<Feallesbase>;
 
 
             //if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
             //{
-            //    objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
+            //    convert = convert.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
 
             //}
             //else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
@@ -70,7 +71,7 @@ namespace Bornholm_Slægts.Controllers
             //    objList = objList.Where(b => b.Fornavne.Contains(Firstname));
             //}
 
-            const int pageSize = 3;
+            const int pageSize = 10;
             if (pg < 1)
             {
                 pg = 1;
@@ -85,14 +86,51 @@ namespace Bornholm_Slægts.Controllers
 
             return View(data);
 
-
-
-
-
-
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Feallesbase feallesbase)
+        {
+
+            using (var client = _httpClientFactory.CreateClient("MyClient"))
+            {
+                var request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:8000/Feallesbase?feallesbase={feallesbase}");
+
+                var response = await client.SendAsync(request);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsStringAsync();
+                    List<Feallesbase>? convert = JsonConvert.DeserializeObject<List<Feallesbase>>(result);
+
+
+                    convert.Add(feallesbase);
+                    TempData["success"] = "En annonccer tilføjet successfully";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.Alert = $"Noget er galt! Grunden: {response.ReasonPhrase}";
+                    return View();
+                }
+
+            }
+
+            // If ModelState is not valid, return the View with errors
+            return View();
+        }
+
+
     }
+}
+
+
         //private readonly ApplicationDbContext _db;
         //public FeallesbaseController(ApplicationDbContext db)
         //{
@@ -135,10 +173,7 @@ namespace Bornholm_Slægts.Controllers
         //    return View(data);
         //}
 
-        //public IActionResult Create()
-        //{
-        //    return View();
-        //}
+
         //public IActionResult Delete(int? id)
         //{
         //    if(id==0 || id == null)
@@ -223,20 +258,7 @@ namespace Bornholm_Slægts.Controllers
         //}
 
 
-        //[HttpPost]
-        //public IActionResult Create(Feallesbase feallesbase)
-        //{
 
-        //    if(ModelState.IsValid)
-        //    {
-        //        _db.Feallesbases.Add(feallesbase);
-        //        _db.SaveChanges();
-        //        TempData["success"] = "En annonccer tilføjet successfully";
-        //        return RedirectToAction("Index");
-        //    }
-        //    return View();
-
-        //}
         //[HttpPost]
         //public IActionResult Update(Feallesbase feallesbase)
         //{
@@ -249,6 +271,7 @@ namespace Bornholm_Slægts.Controllers
         //    }
         //    return View();
         //}
+
     
-}
+    
 

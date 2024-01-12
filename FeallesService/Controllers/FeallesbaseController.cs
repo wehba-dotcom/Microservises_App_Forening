@@ -26,43 +26,45 @@ namespace FeallesService.Controllers
 
         // GET: api/Feallesbase
         [HttpGet]
-        public async Task<ActionResult> GetFeallesbases()
+        public async Task<ActionResult> GetFeallesbases(string? Firstname, DateTime? DoedDato, int pg = 1)
         {
            
-                Console.WriteLine("We are here");
-            var objList = from b in _db.Feallesbases select b;
-            const int pageSize = 5;
-            int pg = 0;
-            if (pg < 1)
-            {
-                pg = 1;
-            }
-            int recsCount = objList.Count();
-            var pager = new Pager(recsCount, pg, pageSize);
-            int resSkip = (pg - 1) * pageSize;
-            // var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
+             
+            var objList = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
 
-            try
+
+            if (!System.String.IsNullOrEmpty(Firstname) && DoedDato != null)
             {
+                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
+
+            }
+            else if (System.String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            {
+                objList = (List<Feallesbase>)objList.Where(b => b.Doedsdato == DoedDato);
+            }
+            else if (!System.String.IsNullOrEmpty(Firstname) && DoedDato == null)
+            {
+                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Firstname));
+            }
+            //const int pageSize = 100;
+         
+            //if (pg < 1)
+            //{
+            //    pg = 1;
+            //}
+            //int recsCount = objList.Count();
+            //var pager = new Pager(recsCount, pg, pageSize);
+            //int resSkip = (pg - 1) * pageSize;
+            
+
+            
                 
-                    var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
-
-                    // Process 'data' or return it as needed
-                    return Ok(data); // Return HTTP 200 OK with the 'data'
-                }
-    catch (SocketException ex)
-            {
-                // Handle SocketException specifically
-                // You might want to log the error or provide a custom error message
-                return StatusCode(500, $"SocketException occurred: {ex.Message}");
-            }
-            catch (Exception ex)
-            {
-                // Handle other exceptions
-                // For instance, log the error or return a general error message
-                return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
-            }
-
+                   // var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
+                  
+                // Process 'data' or return it as needed
+                return Ok(objList); // Return HTTP 200 OK with the 'data'
+                
+   
 
         }
 
