@@ -26,25 +26,25 @@ namespace FeallesService.Controllers
 
         // GET: api/Feallesbase
         [HttpGet]
-        public async Task<ActionResult> GetFeallesbases(string? Firstname, DateTime? DoedDato, int pg = 1)
+        public async Task<ActionResult> GetFeallesbases(string? Fornavne, DateTime? DoedDato, int pg = 1)
         {
            
              
             var objList = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
 
 
-            if (!System.String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            if (!System.String.IsNullOrEmpty(Fornavne) && DoedDato != null)
             {
-                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
+                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Fornavne) && b.Doedsdato == DoedDato);
 
             }
-            else if (System.String.IsNullOrEmpty(Firstname) && DoedDato != null)
+            else if (System.String.IsNullOrEmpty(Fornavne) && DoedDato != null)
             {
                 objList = (List<Feallesbase>)objList.Where(b => b.Doedsdato == DoedDato);
             }
-            else if (!System.String.IsNullOrEmpty(Firstname) && DoedDato == null)
+            else if (!System.String.IsNullOrEmpty(Fornavne) && DoedDato == null)
             {
-                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Firstname));
+                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Fornavne));
             }
             //const int pageSize = 100;
          
@@ -84,13 +84,24 @@ namespace FeallesService.Controllers
 
         // POST: api/Feallesbase
         [HttpPost]
-        public async Task<ActionResult<Feallesbase>> PostFeallesbase(Feallesbase feallesbase)
+        public IActionResult Create(Feallesbase feallesbase)
         {
-            _db.Feallesbases.Add(feallesbase);
-            await _db.SaveChangesAsync();
+            try
+            {
+                _db.Feallesbases.Add(feallesbase);
+                _db.SaveChanges();
 
-            return CreatedAtAction(nameof(GetFeallesbase), new { id = feallesbase.ID }, feallesbase);
+                // Assuming you want to return a 201 Created status with the created resource
+                // return CreatedAtAction("Get", new { id = feallesbase.ID }, feallesbase);
+                return Ok(feallesbase);
+            }
+            catch (Exception ex)
+            {
+                // Log the exception or handle it appropriately
+                return BadRequest("Failed to create the resource: " + ex.Message);
+            }
         }
+
 
         // PUT: api/Feallesbase/5
         [HttpPut("{id}")]
