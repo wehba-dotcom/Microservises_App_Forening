@@ -84,25 +84,30 @@ namespace FeallesService.Controllers
 
         // POST: api/Feallesbase
         [HttpPost]
-        public IActionResult Create(Feallesbase feallesbase)
+        public async Task<ActionResult> Create([FromBody] Feallesbase feallesbase)
         {
-            try
+            if (ModelState.IsValid)
             {
-                _db.Feallesbases.Add(feallesbase);
-                _db.SaveChanges();
+                try
+                {
 
-                // Assuming you want to return a 201 Created status with the created resource
-                // return CreatedAtAction("Get", new { id = feallesbase.ID }, feallesbase);
-                return Ok(feallesbase);
+                    await _db.Feallesbases.AddAsync(feallesbase);
+                    await _db.SaveChangesAsync();
+
+                    // Assuming you want to return a 201 Created status with the created resource
+                    // return CreatedAtAction("Get", new { id = feallesbase.ID }, feallesbase);
+                  //  return CreatedAtAction("Get", new { ID = feallesbase.ID }, feallesbase);
+                    return Ok(200);
+                }
+                catch (Exception ex)
+                {
+                    // Log the exception or handle it appropriately
+                    return BadRequest("Failed to create the resource: " + ex.Message);
+                }
             }
-            catch (Exception ex)
-            {
-                // Log the exception or handle it appropriately
-                return BadRequest("Failed to create the resource: " + ex.Message);
-            }
+            return BadRequest();
+
         }
-
-
         // PUT: api/Feallesbase/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutFeallesbase(int id, Feallesbase feallesbase)
