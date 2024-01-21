@@ -5,6 +5,7 @@ using FeallesService.Data;
 using FeallesService.Utility;
 using System.Net.Sockets;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Newtonsoft.Json;
 
 namespace FeallesService.Controllers
 {
@@ -109,11 +110,15 @@ namespace FeallesService.Controllers
 
         }
         // PUT: api/Feallesbase/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutFeallesbase(int id, Feallesbase feallesbase)
+        [HttpPut("{ID}")]
+        public async Task<IActionResult> PutFeallesbase( int ID, [FromBody] Feallesbase feallesbase)
         {
-            if (id != feallesbase.ID)
+            Console.WriteLine($"Received ID: {ID}, Feallesbase: {JsonConvert.SerializeObject(feallesbase)}");
+
+            if (ID != feallesbase.ID)
             {
+                // Log the mismatch for debugging
+                Console.WriteLine("ID mismatch");
                 return BadRequest();
             }
 
@@ -125,7 +130,7 @@ namespace FeallesService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FeallesbaseExists(id))
+                if (!FeallesbaseExists(ID))
                 {
                     return NotFound();
                 }

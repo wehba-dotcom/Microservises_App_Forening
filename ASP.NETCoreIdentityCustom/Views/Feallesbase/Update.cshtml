@@ -1,4 +1,4 @@
-﻿@model Bornholm_Slægts.Models.Feallesbase
+﻿ @model Bornholm_Slægts.Models.Feallesbase
 <div class="card shadow border-0 mt-4">
     <div class="card-header bg-secondary bg-gradient ml-0 py-3">
         <div class="row">
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="card-body p-4">
-    <form method="post" asp-action="Update">
+        <form method="post" asp-action="Index1">
     <input asp-for="ID" hidden />
     <div class="border p-3">
         <div class="col">
@@ -133,6 +133,7 @@
                         <div class="col">
                             <input type="submit" class="btn btn-primary w-75" value="Opdater" />
                         </div>
+                            
                         <div class="col">
                             <a asp-action="Index" class="btn btn-primary w-75">TilBage</a>
                         </div>
@@ -147,3 +148,169 @@
 </div>
 
 
+
+
+
+@* 
+
+@{
+    ViewBag.Title = "Update Feallesbase";
+}
+
+<h2>Update Feallesbase</h2>
+
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["success"]
+    </div>
+}
+
+@if (ViewBag.Alert != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Alert
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AvisTypeID)
+        @Html.EditorFor(model => model.AvisTypeID)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Avisdato)
+        @Html.EditorFor(model => model.Avisdato, new { @class = "form-control datepicker" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Efternavn)
+        @Html.EditorFor(model => model.Efternavn)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Fornavne)
+        @Html.EditorFor(model => model.Fornavne, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Foedt)
+        @Html.EditorFor(model => model.Foedt, new { @class = "form-control datepicker" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Alder)
+        @Html.EditorFor(model => model.Alder)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Doebenavn)
+        @Html.EditorFor(model => model.Doebenavn)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Erhverv)
+        @Html.EditorFor(model => model.Erhverv)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Adresser)
+        @Html.EditorFor(model => model.Adresser)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SognID)
+        @Html.EditorFor(model => model.SognID)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.TidlBopael)
+        @Html.EditorFor(model => model.TidlBopael)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Doedsdato)
+        @Html.EditorFor(model => model.Doedsdato)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Begravelsesdato)
+        @Html.EditorFor(model => model.Begravelsesdato)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Begravelsessted)
+        @Html.EditorFor(model => model.Begravelsessted)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Efterladte)
+        @Html.EditorFor(model => model.Efterladte)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FlereDoedsannoncer)
+        @Html.EditorFor(model => model.FlereDoedsannoncer)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.AndreDataFraAnnoncen)
+        @Html.EditorFor(model => model.AndreDataFraAnnoncen)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Oegenavne)
+        @Html.EditorFor(model => model.Oegenavne)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nekrolog)
+        @Html.EditorFor(model => model.Nekrolog)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Mindeord)
+        @Html.EditorFor(model => model.Mindeord)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Statstidende)
+        @Html.EditorFor(model => model.Statstidende)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Partnerlink)
+        @Html.EditorFor(model => model.Partnerlink)
+    </div>
+
+
+    <!-- Add similar sections for other properties -->
+
+    <button type="submit" class="btn btn-primary">Update</button>
+}
+
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true
+            });
+        });
+    </script>
+}
+
+
+
+
+ *@

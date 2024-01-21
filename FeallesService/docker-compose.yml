@@ -9,7 +9,7 @@ services:
       - "8000:80"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__ApplicationDbContextConnection: "Server=172.20.10.10;Database=fealesbaseoneservice;User Id=SA;Password=Asd123asd;trusted_connection=false;Persist Security Info=False;Encrypt=False"
+      ConnectionStrings__ApplicationDbContextConnection: "Server=192.168.0.52;Database=fealesbaseoneservice;User Id=SA;Password=Asd123asd;trusted_connection=false;Persist Security Info=False;Encrypt=False"
     depends_on:
       - database
 
