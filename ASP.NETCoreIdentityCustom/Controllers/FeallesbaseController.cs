@@ -38,7 +38,7 @@ namespace Bornholm_Slægts.Controllers
 
         [Authorize(Policy = "RequireManager")]
 
-        public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
+        public async Task<IActionResult> Index(string? Fornavne, DateTime? DoedDato, int pg)
         {
             var client = _httpClientFactory.CreateClient("MyClient");
 
@@ -58,20 +58,20 @@ namespace Bornholm_Slægts.Controllers
             // var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
             List<Feallesbase>? convert = JsonConvert.DeserializeObject<List<Feallesbase>>(result) as List<Feallesbase>;
 
+            //var convertlist = convert.ToList();
+            if (!String.IsNullOrEmpty(Fornavne) && DoedDato != null)
+            {
+                convert = (List<Feallesbase>)convert.Where(b => b.Fornavne.Contains(Fornavne) && b.Doedsdato == DoedDato);
 
-            //if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
-            //{
-            //    convert = convert.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
-
-            //}
-            //else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
-            //{
-            //    objList = objList.Where(b => b.Doedsdato == DoedDato);
-            //}
-            //else if (!String.IsNullOrEmpty(Firstname) && DoedDato == null)
-            //{
-            //    objList = objList.Where(b => b.Fornavne.Contains(Firstname));
-            //}
+            }
+            else if (String.IsNullOrEmpty(Fornavne) && DoedDato != null)
+            {
+                convert = (List<Feallesbase>)convert.Where(b => b.Doedsdato == DoedDato);
+            }
+            else if (!String.IsNullOrEmpty(Fornavne) && DoedDato == null)
+            {
+                convert = (List<Feallesbase>)convert.Where(b => b.Fornavne.Contains(Fornavne));
+            }
 
             const int pageSize = 10;
             if (pg < 1)
@@ -129,78 +129,6 @@ namespace Bornholm_Slægts.Controllers
         }
 
 
-
-
-        //        public async Task<IActionResult> Update(int? ID, [FromBody] Feallesbase feallesbase)
-        //        {
-        //            try
-        //            {
-        //                using (var client = _httpClientFactory.CreateClient("MyClient"))
-        //                {
-        //                    var content = new StringContent(JsonConvert.SerializeObject(feallesbase), Encoding.UTF8, "application/json");
-
-        //                    // Update the URL to use the provided ID in the route parameter
-        //                    var requestone = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:8000/Feallesbase/{ID}")
-        //                    {
-        //                        Content = content
-        //                    };
-
-        //                    var responseone = await client.SendAsync(requestone);
-
-        //                    if (responseone.IsSuccessStatusCode)
-        //                    {
-        //                        var resultone = await responseone.Content.ReadAsStringAsync();
-        //                        var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(resultone);
-        //                        return View(feallesbaseobj);
-        //                        TempData["success"] = "Annoncen er hentet successfully";
-
-        //                        // Update the URL to use the ID from the response
-        //                        var request = new HttpRequestMessage(HttpMethod.Put, $"http://localhost:8000/Feallesbase/{feallesbaseobj.ID}")
-        //                        {
-        //                            Content = content
-        //                        };
-
-        //                        var response = await client.SendAsync(request);
-
-        //                        if (response.IsSuccessStatusCode)
-        //                        {
-        //                            var result = await response.Content.ReadAsStringAsync();
-        //                            // var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
-        //                            response.EnsureSuccessStatusCode();
-        //                            TempData["success"] = "Annoncen er opdateret successfully";
-        //                            return RedirectToAction("Index");
-        //                        }
-        //                        else if (response.StatusCode == HttpStatusCode.NotFound)
-        //                        {
-        //                            // Handle not found case
-        //                            return NotFound();
-        //                        }
-        //                        else
-        //                        {
-        //                            // Handle other error cases
-        //                            ViewBag.Alert = $"Noget er galt! Status Code: {response.StatusCode}";
-        //                            return View("Index");
-        //                        }
-        //                    }
-        //                    else
-        //                    {
-        //                        // Handle the case when the initial GET request fails
-        //                        ViewBag.Alert = $"Noget er galt! Status Code: {responseone.StatusCode}";
-        //                        return View("Index");
-        //                    }
-        //                }
-        //            }
-        //            catch (HttpRequestException ex)
-        //            {
-        //                // Log the exception or handle it appropriately
-        //                ViewBag.Alert = $"Noget er galt! Grunden: {ex.Message}";
-        //                return View("Index");
-        //            }
-        //        }
-
-        //    }
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Update(Feallesbase feallesbase)
         {
@@ -251,7 +179,7 @@ namespace Bornholm_Slægts.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Index1( Feallesbase feallesbase)
+        public async Task<IActionResult> Index1(Feallesbase feallesbase)
         {
             try
             {
@@ -296,86 +224,110 @@ namespace Bornholm_Slægts.Controllers
                 return View("Index");
             }
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Feallesbase feallesbase)
+        {
+            try
+            {
+                using (var client = _httpClientFactory.CreateClient("MyClient"))
+                {
+                    // Serialize the Feallesbase object and send it in the request body
+                    var content = new StringContent(JsonConvert.SerializeObject(feallesbase), Encoding.UTF8, "application/json");
+
+                    // Use Uri.EscapeUriString to ensure proper URL encoding
+                    var request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:8000/Feallesbase/{feallesbase.ID}")
+                    {
+                        Content = content
+                    };
+
+                    var response = await client.SendAsync(request);
+
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadAsStringAsync();
+                        var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
+
+                        TempData["success"] = "Annoncen er taked successfully";
+                        return View(feallesbaseobj);
+                    }
+                    else if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        // Handle not found case
+                        return NotFound();
+                    }
+                    else
+                    {
+                        // Handle other error cases
+                        ViewBag.Alert = $"Noget er galt! Status Code: {response.StatusCode}";
+                        return View("Index");
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log the exception or handle it appropriately
+                ViewBag.Alert = $"Noget er galt! Grunden: {ex.Message}";
+                return View("Index");
+            }
+        }
+
+
+
+
+        [HttpDelete]
+        public async Task<IActionResult> Index2(Feallesbase feallesbase)
+        {
+
+            try
+            {
+
+                using (var client = _httpClientFactory.CreateClient("MyClient"))
+                {
+                    // Serialize the Feallesbase object and send it in the request body
+                    var content = new StringContent(JsonConvert.SerializeObject(feallesbase), Encoding.UTF8, "application/json");
+
+                    // Use Uri.EscapeUriString to ensure proper URL encoding
+                    var request = new HttpRequestMessage(HttpMethod.Delete, $"http://localhost:8000/Feallesbase/{feallesbase.ID}")
+                    {
+                        Content = content
+                    };
+
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        //var result = await response.Content.ReadAsStringAsync();
+                        //var feallesbaseobj = JsonConvert.DeserializeObject<Feallesbase>(result);
+                        response.EnsureSuccessStatusCode();
+                        TempData["success"] = "Annoncen er sletet successfully";
+                        return RedirectToAction("Index");
+                    }
+                    else if (response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        // Handle not found case
+                        return NotFound();
+                    }
+                    else
+                    {
+                        // Handle other error cases
+                        ViewBag.Alert = $"Noget er galt! Status Code: {response.StatusCode}";
+                        return View("Index");
+                    }
+                }
+            }
+            catch (HttpRequestException ex)
+            {
+                // Log the exception or handle it appropriately
+                ViewBag.Alert = $"Noget er galt! Grunden: {ex.Message}";
+                return View("Index");
+            }
+        }
     }
 }
 
 
-
-//    [HttpPost]
-//    public async Task<IActionResult> Create(Feallesbase feallesbase)
-//    {
-
-//        using (var client = _httpClientFactory.CreateClient("MyClient"))
-//        {
-//            var request = new HttpRequestMessage(HttpMethod.Post, $"http://localhost:8000/Feallesbase?Feallesbase={feallesbase}");
-
-//            var response = await client.SendAsync(request);
-
-//                var result = await response.Content.ReadAsStringAsync();
-//                //List<Feallesbase>? convert = JsonConvert.DeserializeObject<List<Feallesbase>>(result);
-
-//            var obj = JsonConvert.DeserializeObject<Feallesbase>(result);
-
-//            TempData["success"] = "En annonccer tilføjet successfully";
-//                return RedirectToAction("Index");
-
-//           //catch  
-//           // {
-//           //     ViewBag.Alert = $"Noget er galt! Grunden: {response.ReasonPhrase}";
-//           //     return View();
-//           // }
-
-//        }
-
-
-//    }
-
-
-//}
-
-
-
-//private readonly ApplicationDbContext _db;
-//public FeallesbaseController(ApplicationDbContext db)
-//{
-//    _db = db;
-//}
-
-//public async Task<IActionResult> Index(string? Firstname, DateTime? DoedDato, int pg)
-//{
-//    // ViewData["DateSortParm"] = Firstname == "DateTime" ? "Avisdato" : "DateTime";
-//    var objList = from b in _db.Feallesbases select b;
-
-//    if (!String.IsNullOrEmpty(Firstname) && DoedDato != null)
-//    {
-//        objList = objList.Where(b => b.Fornavne.Contains(Firstname) && b.Doedsdato == DoedDato);
-
-//    }
-//    else if (String.IsNullOrEmpty(Firstname) && DoedDato != null)
-//    {
-//        objList = objList.Where(b => b.Doedsdato == DoedDato);
-//    }
-//    else if (!String.IsNullOrEmpty(Firstname) && DoedDato == null)
-//    {
-//        objList = objList.Where(b => b.Fornavne.Contains(Firstname));
-//    }
-
-//    const int pageSize = 5;
-//    if (pg < 1)
-//    {
-//        pg = 1;
-//    }
-//    int recsCount = objList.Count();
-//    var pager = new Pager(recsCount, pg, pageSize);
-//    int resSkip = (pg - 1) * pageSize;
-//    var objLists = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
-
-//    var data =  objLists.ToList();
-//    this.ViewBag.Pager = pager;
-
-
-//    return View(data);
-//}
 
 
 //public IActionResult Delete(int? id)

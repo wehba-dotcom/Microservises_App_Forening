@@ -6,6 +6,7 @@ using FeallesService.Utility;
 using System.Net.Sockets;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FeallesService.Controllers
 {
@@ -15,62 +16,42 @@ namespace FeallesService.Controllers
     public class FeallesbaseController : ControllerBase
 
     {
-       
+
 
         private readonly AppDbContext _db;
-      
+
         public FeallesbaseController(AppDbContext db)
         {
             _db = db;
-           
+
         }
 
         // GET: api/Feallesbase
         [HttpGet]
-        public async Task<ActionResult> GetFeallesbases(string? Fornavne, DateTime? DoedDato, int pg = 1)
+        public async Task<ActionResult> GetFeallesbases()
         {
-           
-             
-            var objList = await _db.Feallesbases.Where(f => f.AvisTypeID == "Bornholms Tidende").ToListAsync();
 
-
-            if (!System.String.IsNullOrEmpty(Fornavne) && DoedDato != null)
+            try
             {
-                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Fornavne) && b.Doedsdato == DoedDato);
+                var objList = from b in await _db.Feallesbases.ToListAsync() select b;
 
-            }
-            else if (System.String.IsNullOrEmpty(Fornavne) && DoedDato != null)
-            {
-                objList = (List<Feallesbase>)objList.Where(b => b.Doedsdato == DoedDato);
-            }
-            else if (!System.String.IsNullOrEmpty(Fornavne) && DoedDato == null)
-            {
-                objList = (List<Feallesbase>)objList.Where(b => b.Fornavne.Contains(Fornavne));
-            }
-            //const int pageSize = 100;
-         
-            //if (pg < 1)
-            //{
-            //    pg = 1;
-            //}
-            //int recsCount = objList.Count();
-            //var pager = new Pager(recsCount, pg, pageSize);
-            //int resSkip = (pg - 1) * pageSize;
-            
-
-            
-                
-                   // var data = await objList.Skip(resSkip).Take(pager.PageSize).ToListAsync();
-                  
                 // Process 'data' or return it as needed
                 return Ok(objList); // Return HTTP 200 OK with the 'data'
-                
-   
+
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine(ex);
+                return StatusCode(500, "Internal Server Error");
+            }
 
         }
 
-        // GET: api/Feallesbase/5
-        [HttpGet("{id}")]
+
+            // GET: api/Feallesbase/5
+            [HttpGet("{id}")]
         public async Task<ActionResult<Feallesbase>> GetFeallesbase(int id)
         {
             var feallesbase = await _db.Feallesbases.FindAsync(id);
@@ -94,10 +75,6 @@ namespace FeallesService.Controllers
 
                     await _db.Feallesbases.AddAsync(feallesbase);
                     await _db.SaveChangesAsync();
-
-                    // Assuming you want to return a 201 Created status with the created resource
-                    // return CreatedAtAction("Get", new { id = feallesbase.ID }, feallesbase);
-                  //  return CreatedAtAction("Get", new { ID = feallesbase.ID }, feallesbase);
                     return Ok(200);
                 }
                 catch (Exception ex)
@@ -144,10 +121,10 @@ namespace FeallesService.Controllers
         }
 
         // DELETE: api/Feallesbase/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFeallesbase(int id)
+        [HttpDelete("{ID}")]
+        public async Task<IActionResult> DeleteFeallesbase(int? ID)
         {
-            var feallesbase = await _db.Feallesbases.FindAsync(id);
+            var feallesbase = await _db.Feallesbases.FindAsync(ID);
             if (feallesbase == null)
             {
                 return NotFound();

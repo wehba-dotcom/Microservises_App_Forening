@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace FeallesService.Models
+namespace test.Models
 {
     public class Feallesbase
     {
@@ -45,3 +45,4 @@ namespace FeallesService.Models
 
     }
 }
+

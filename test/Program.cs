@@ -1,12 +1,10 @@
-using FeallesService.Data;
 using Microsoft.EntityFrameworkCore;
+using test.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-
-// Add services to the container.
 try
 {
     var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");
@@ -21,11 +19,13 @@ catch (Exception ex)
 }
 
 
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
+
 
 var app = builder.Build();
 
@@ -34,16 +34,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
 }
- else
- {
-        // Configure error handling for production
-        app.UseExceptionHandler("/Home/Error");
-        app.UseHsts();
- }
-
-
 
 //app.UseHttpsRedirection();
 

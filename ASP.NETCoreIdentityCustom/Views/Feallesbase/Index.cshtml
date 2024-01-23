@@ -30,12 +30,20 @@
     <hr/>
   <form asp-controller="Feallesbase" asp-action="Index">
     <div>
-        Fornavne: <input type="text" name="Firstname" />
+        Fornavne: <input type="text" name="Fornavne" />
         DeodsDato: <input type="datetime" name="DoedDato" />
         <input type="submit" value="Søg" />
          <a asp-action="Index" class="btn btn-primary w-20"><i class="bi bi-backspace"></i>  Tilbage til fuld liste</a>
     </div>
   </form>
+<form asp-controller="Feallesbase" asp-action="Index">
+    <div>
+        ID: <input type="number" name="ID" />
+       
+        <input type="submit" value="Søg" />
+        <a asp-action="Index" class="btn btn-primary w-20"><i class="bi bi-backspace"></i>  Tilbage til fuld liste</a>
+    </div>
+</form>
     <hr />
     <br />
 
