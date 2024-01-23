@@ -277,7 +277,7 @@ namespace Bornholm_Slægts.Controllers
 
 
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Index2(Feallesbase feallesbase)
         {
 
