@@ -1,31 +1,23 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Sleagts.Core;
-using Bornholm_Sleagts.Core.Repositories;
-using Bornholm_Sleagts.Repositories;
-using Bornholm_Sleagts.Seeds;
-
+using IdentityService.Areas.Identity.Data;
+using IdentityService.Core;
+using IdentityService.Core.Repositories;
+using IdentityService.Repositories;
+using System.Drawing;
+using IdentityService.Data;
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");
+var connectionString = builder.Configuration.GetConnectionString("IdentityServiceContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityServiceContextConnection' not found.");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<IdentityServiceContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-
-// Configure HttpClient with a timeout
-builder.Services.AddHttpClient("MyClient", client =>
-{
-    // Set the timeout to 30 seconds (or any other duration you prefer)
-    client.Timeout = TimeSpan.FromSeconds(30);
-});
+builder.Services.AddDefaultIdentity<IdentityServiceUser>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<IdentityServiceContext>()
+    .AddRoles<IdentityRole>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient("MyClient");
+
 #region Authorization
 
 AddAuthorizationPolicies();
@@ -60,16 +52,16 @@ app.MapControllerRoute(
 
 using var Scope = app.Services.CreateScope();
 var services = Scope.ServiceProvider;
-try
-{
-    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+//try
+//{
+//    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+//    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    await DefaultRole.SeedAsync(roleManager);
-    await DefaultUser.SeedAdminAsync(userManager, roleManager);
-    await DefaultUser.SeedBasicUserAsync(userManager, roleManager);
-}
-catch (Exception) { throw; }
+//    await DefaultRole.SeedAsync(roleManager);
+//    await DefaultUser.SeedAdminAsync(userManager, roleManager);
+//    await DefaultUser.SeedBasicUserAsync(userManager, roleManager);
+//}
+//catch (Exception) { throw; }
 
 
 app.Run();
@@ -91,7 +83,7 @@ void AddAuthorizationPolicies()
 
 void AddScoped()
 {
-    builder.Services.AddScoped<IUserRepository, UserRepository>();
+    builder.Services.AddScoped<IUserRepository, IUserRepository>();
     builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+    builder.Services.AddScoped<IUnitOfWork, IUnitOfWork>();
 }
