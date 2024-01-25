@@ -1,8 +1,8 @@
-﻿using IdentityService.Core.Repositories;
+﻿using IdentityService.Core.Interfaces;
 
 namespace IdentityService.Repositories
 {
-    public class UnitOfWork
+    public class UnitOfWork:IUnitOfWork
     {
         public IUserRepository User { get; }
         public IRoleRepository Role { get; }

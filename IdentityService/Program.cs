@@ -2,18 +2,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using IdentityService.Areas.Identity.Data;
 using IdentityService.Core;
-using IdentityService.Core.Repositories;
+using IdentityService.Core.Interfaces;
 using IdentityService.Repositories;
 using System.Drawing;
 using IdentityService.Data;
+using IdentityService.Seeds;
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("IdentityServiceContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityServiceContextConnection' not found.");
+var connectionString = builder.Configuration.GetConnectionString("IdentityServiceContextConnection");
 
-builder.Services.AddDbContext<IdentityServiceContext>(options => options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<IdentityServiceContext>(options =>
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddDefaultIdentity<IdentityServiceUser>(options => options.SignIn.RequireConfirmedAccount = false)
-    .AddEntityFrameworkStores<IdentityServiceContext>()
-    .AddRoles<IdentityRole>();
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<IdentityServiceContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -36,32 +38,30 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
-app.UseRouting();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 using var Scope = app.Services.CreateScope();
 var services = Scope.ServiceProvider;
-//try
-//{
-//    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-//    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+try
+{
+    var userManager = services.GetRequiredService<UserManager<IdentityServiceUser>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-//    await DefaultRole.SeedAsync(roleManager);
-//    await DefaultUser.SeedAdminAsync(userManager, roleManager);
-//    await DefaultUser.SeedBasicUserAsync(userManager, roleManager);
-//}
-//catch (Exception) { throw; }
+    await DefaultRole.SeedAsync(roleManager);
+    await DefaultUser.SeedAdminAsync(userManager, roleManager);
+    await DefaultUser.SeedBasicUserAsync(userManager, roleManager);
+}
+catch (Exception) { throw; }
 
 
 app.Run();
@@ -83,7 +83,7 @@ void AddAuthorizationPolicies()
 
 void AddScoped()
 {
-    builder.Services.AddScoped<IUserRepository, IUserRepository>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
     builder.Services.AddScoped<IRoleRepository, RoleRepository>();
-    builder.Services.AddScoped<IUnitOfWork, IUnitOfWork>();
+    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 }

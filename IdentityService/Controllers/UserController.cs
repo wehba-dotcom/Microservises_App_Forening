@@ -1,5 +1,5 @@
 ﻿using IdentityService.Areas.Identity.Data;
-using IdentityService.Core.Repositories;
+using IdentityService.Core.Interfaces;
 using IdentityService.Core.ViewModels;
 using IdentityService.Data;
 using Microsoft.AspNetCore.Authorization;
@@ -22,8 +22,8 @@ namespace IdentityService.Controllers
             _context = context;
 
         }
-        [Authorize(Policy = "RequireAdmin")]
-        [Authorize(Policy = "RequireManager")]
+        //[Authorize(Policy = "RequireAdmin")]
+        //[Authorize(Policy = "RequireManager")]
         public IActionResult Index()
         {
             var users = _unitOfWork.User.GetUsers();

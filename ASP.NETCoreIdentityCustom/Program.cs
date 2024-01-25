@@ -5,7 +5,6 @@ using Bornholm_Sleagts.Core;
 using Bornholm_Sleagts.Core.Repositories;
 using Bornholm_Sleagts.Repositories;
 using Bornholm_Sleagts.Seeds;
-
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");
 
@@ -16,16 +15,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Configure HttpClient with a timeout
-builder.Services.AddHttpClient("MyClient", client =>
-{
-    // Set the timeout to 30 seconds (or any other duration you prefer)
-    client.Timeout = TimeSpan.FromSeconds(30);
-});
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddHttpClient("MyClient");
+
 #region Authorization
 
 AddAuthorizationPolicies();
@@ -44,20 +36,18 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//app.UseHttpsRedirection();
-app.UseRouting();
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 using var Scope = app.Services.CreateScope();
 var services = Scope.ServiceProvider;
 try

@@ -1,4 +1,4 @@
-﻿namespace IdentityService.Core.Repositories
+﻿namespace IdentityService.Core.Interfaces
 {
     public interface IUnitOfWork
     {
