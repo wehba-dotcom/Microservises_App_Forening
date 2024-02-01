@@ -10,6 +10,12 @@ var connectionString = builder.Configuration.GetConnectionString("ApplicationDbC
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
+// Configure HttpClient with a timeout
+builder.Services.AddHttpClient("MyClient", client =>
+{
+    // Set the timeout to 30 seconds (or any other duration you prefer)
+    client.Timeout = TimeSpan.FromSeconds(30);
+});
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
