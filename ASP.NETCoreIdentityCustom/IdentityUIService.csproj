@@ -38,4 +38,8 @@
     <None Include="Views\Feallesbase\Update.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SharedModels\SharedModels.csproj" />
+  </ItemGroup>
+
 </Project>

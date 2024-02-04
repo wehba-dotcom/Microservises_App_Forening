@@ -1,15 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 
-namespace IdentityUIService.Models
+namespace SharedModels.Models
 {
 
     public class Feallesbase
@@ -47,7 +43,7 @@ namespace IdentityUIService.Models
         public DateTime? Statstidende { get; set; }
         [DisplayName("Partner Link")]
         public string? Partnerlink { get; set; }
-              public Feallesbase()
+        public Feallesbase()
         {
 
         }

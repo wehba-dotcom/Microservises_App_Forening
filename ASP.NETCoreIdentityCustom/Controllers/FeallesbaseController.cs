@@ -1,5 +1,4 @@
 ﻿
-using IdentityUIService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using String = System.String;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using IdentityUIService.Areas.Identity.Data;
-using IdentityUIService.Models;
+
 using Microsoft.AspNetCore.Authorization;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Newtonsoft.Json;
@@ -20,6 +19,7 @@ using DocumentFormat.OpenXml.InkML;
 using DocumentFormat.OpenXml.Office2016.Excel;
 using System.Text;
 using System.Net;
+using SharedModels.Models;
 
 namespace IdentityUIService.Controllers
 {
@@ -79,7 +79,7 @@ namespace IdentityUIService.Controllers
                 pg = 1;
             }
             int recsCount = convert.Count();
-            var pager = new Pager(recsCount, pg, pageSize);
+            var pager = new Models.Pager(recsCount, pg, pageSize);
             int resSkip = (pg - 1) * pageSize;
             var data = convert.Skip(resSkip).Take(pager.PageSize).ToList();
 
