@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityUIService", "ASP.NE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeallesService", "FeallesService\FeallesService.csproj", "{27E40F57-FEC1-48BC-A6C1-F873E7038773}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService", "IdentityService\IdentityService.csproj", "{E4E54D50-A882-46CF-8D59-0B441A570DD1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedModels", "SharedModels\SharedModels.csproj", "{1B8D3301-CDCF-4393-B661-B310F9CF26AB}"
 EndProject
 Global
@@ -25,10 +23,6 @@ Global
 		{27E40F57-FEC1-48BC-A6C1-F873E7038773}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E40F57-FEC1-48BC-A6C1-F873E7038773}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E40F57-FEC1-48BC-A6C1-F873E7038773}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E4E54D50-A882-46CF-8D59-0B441A570DD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E4E54D50-A882-46CF-8D59-0B441A570DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E4E54D50-A882-46CF-8D59-0B441A570DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E4E54D50-A882-46CF-8D59-0B441A570DD1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1B8D3301-CDCF-4393-B661-B310F9CF26AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1B8D3301-CDCF-4393-B661-B310F9CF26AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B8D3301-CDCF-4393-B661-B310F9CF26AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
