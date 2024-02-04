@@ -57,6 +57,24 @@
                                 </ul>
                             </li>
                         }*@
+                        {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Forskelige Gategori
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li class="nav-item">
+                                    <a class="dropdown-item" asp-area="" asp-controller="Feallesbase" asp-action="Index">Feallesbase Annonser</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="RoleViews" asp-action="Manager">Manager</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-controller="RoleViews" asp-action="Admin">Admin</a>
+                                </li>
+                            </ul>
+                        </li>
+                        }
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="User" asp-action="Index">Brugere</a>
                         </li>
