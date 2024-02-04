@@ -1,12 +1,12 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Slægts.Models;
+﻿using IdentityUIService.Areas.Identity.Data;
+using IdentityUIService.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Bornholm_Sleagts.Models;
+using IdentityUIService.Models;
 
-namespace Bornholm_Sleagts.Areas.Identity.Data;
+namespace IdentityUIService.Areas.Identity.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
 {

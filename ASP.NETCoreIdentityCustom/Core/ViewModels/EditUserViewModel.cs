@@ -1,8 +1,8 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
+﻿using IdentityUIService.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Bornholm_Sleagts.Core.ViewModels
+namespace IdentityUIService.Core.ViewModels
 {
     public class EditUserViewModel
     {

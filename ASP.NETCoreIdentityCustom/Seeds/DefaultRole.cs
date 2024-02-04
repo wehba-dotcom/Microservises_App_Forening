@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using static Bornholm_Sleagts.Core.Constants;
+using static IdentityUIService.Core.Constants;
 
-namespace Bornholm_Sleagts.Seeds
+namespace IdentityUIService.Seeds
 {
     public static class DefaultRole
     {

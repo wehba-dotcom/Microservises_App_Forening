@@ -1,4 +1,4 @@
-﻿namespace Bornholm_Sleagts.Models
+﻿namespace IdentityUIService.Models
 {
     public class Pager
     {

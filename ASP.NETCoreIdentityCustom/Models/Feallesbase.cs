@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
 
-namespace Bornholm_Slægts.Models
+namespace IdentityUIService.Models
 {
 
     public class Feallesbase

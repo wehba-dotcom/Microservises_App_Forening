@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Sleagts.Core;
-using Bornholm_Sleagts.Core.Repositories;
-using Bornholm_Sleagts.Repositories;
-using Bornholm_Sleagts.Seeds;
+using IdentityUIService.Areas.Identity.Data;
+using IdentityUIService.Core;
+using IdentityUIService.Core.Repositories;
+using IdentityUIService.Repositories;
+using IdentityUIService.Seeds;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection");
 

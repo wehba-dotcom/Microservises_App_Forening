@@ -1,8 +1,8 @@
-﻿using Bornholm_Sleagts.Core;
+﻿using IdentityUIService.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bornholm_Sleagts.Controllers
+namespace IdentityUIService.Controllers
 {
     public class RoleViewsController : Controller
     {

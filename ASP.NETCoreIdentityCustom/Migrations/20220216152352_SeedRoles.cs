@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Bornholm_Sleagts.Migrations
+namespace IdentityUIService.Migrations
 {
     public partial class SeedRoles : Migration
     {

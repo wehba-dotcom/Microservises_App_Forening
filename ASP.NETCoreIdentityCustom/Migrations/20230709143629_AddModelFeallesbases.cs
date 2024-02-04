@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Bornholm_Sleagts.Migrations
+namespace IdentityUIService.Migrations
 {
     public partial class AddModelFeallesbases : Migration
     {

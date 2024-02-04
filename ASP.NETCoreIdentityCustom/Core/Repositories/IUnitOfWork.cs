@@ -1,4 +1,4 @@
-﻿namespace Bornholm_Sleagts.Core.Repositories
+﻿namespace IdentityUIService.Core.Repositories
 {
     public interface IUnitOfWork
     {

@@ -1,9 +1,9 @@
-﻿using Bornholm_Sleagts.Models;
+﻿using IdentityUIService.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Bornholm_Sleagts.Controllers
+namespace IdentityUIService.Controllers
 {
     public class HomeController : Controller
     {

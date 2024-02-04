@@ -1,6 +1,6 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
+﻿using IdentityUIService.Areas.Identity.Data;
 
-namespace Bornholm_Sleagts.Core.ViewModels
+namespace IdentityUIService.Core.ViewModels
 {
     public class DeleteUserViewModel
     {

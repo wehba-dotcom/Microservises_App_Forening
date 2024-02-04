@@ -1,4 +1,4 @@
-﻿namespace Bornholm_Sleagts
+﻿namespace IdentityUIService
 {
     public class Helper
     {

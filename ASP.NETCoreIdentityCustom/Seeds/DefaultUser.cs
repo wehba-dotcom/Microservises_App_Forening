@@ -1,10 +1,10 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Sleagts.Core;
+﻿using IdentityUIService.Areas.Identity.Data;
+using IdentityUIService.Core;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using static Bornholm_Sleagts.Core.Constants;
-using static Bornholm_Sleagts.Helper;
-namespace Bornholm_Sleagts.Seeds
+using static IdentityUIService.Core.Constants;
+using static IdentityUIService.Helper;
+namespace IdentityUIService.Seeds
 {
     public static class DefaultUser
     {

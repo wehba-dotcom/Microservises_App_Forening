@@ -1,5 +1,5 @@
 ﻿
-using Bornholm_Slægts.Models;
+using IdentityUIService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 using String = System.String;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Sleagts.Models;
+using IdentityUIService.Areas.Identity.Data;
+using IdentityUIService.Models;
 using Microsoft.AspNetCore.Authorization;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Newtonsoft.Json;
@@ -21,7 +21,7 @@ using DocumentFormat.OpenXml.Office2016.Excel;
 using System.Text;
 using System.Net;
 
-namespace Bornholm_Slægts.Controllers
+namespace IdentityUIService.Controllers
 {
 
 

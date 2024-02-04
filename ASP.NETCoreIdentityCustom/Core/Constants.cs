@@ -1,4 +1,4 @@
-﻿namespace Bornholm_Sleagts.Core
+﻿namespace IdentityUIService.Core
 {
     public static class Constants
     {

@@ -1,7 +1,7 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Sleagts.Core.Repositories;
+﻿using IdentityUIService.Areas.Identity.Data;
+using IdentityUIService.Core.Repositories;
 
-namespace Bornholm_Sleagts.Repositories
+namespace IdentityUIService.Repositories
 {
     public class UserRepository : IUserRepository
     {

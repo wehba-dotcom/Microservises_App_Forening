@@ -2,13 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 using System;
 using System.Threading.Tasks;
-using Bornholm_Sleagts.Areas.Identity.Data;
+using IdentityUIService.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace Bornholm_Sleagts.Areas.Identity.Pages.Account.Manage
+namespace IdentityUIService.Areas.Identity.Pages.Account.Manage
 {
     public class PersonalDataModel : PageModel
     {

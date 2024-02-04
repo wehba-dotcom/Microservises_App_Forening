@@ -1,13 +1,13 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
-using Bornholm_Sleagts.Core.Repositories;
-using Bornholm_Sleagts.Core.ViewModels;
-using Bornholm_Sleagts.Repositories;
+﻿using IdentityUIService.Areas.Identity.Data;
+using IdentityUIService.Core.Repositories;
+using IdentityUIService.Core.ViewModels;
+using IdentityUIService.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace Bornholm_Sleagts.Controllers
+namespace IdentityUIService.Controllers
 {
     public class UserController : Controller
     {

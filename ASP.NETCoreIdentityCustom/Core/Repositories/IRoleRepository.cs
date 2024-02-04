@@ -1,7 +1,7 @@
-﻿using Bornholm_Sleagts.Areas.Identity.Data;
+﻿using IdentityUIService.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 
-namespace Bornholm_Sleagts.Core.Repositories
+namespace IdentityUIService.Core.Repositories
 {
     public interface IRoleRepository
     {

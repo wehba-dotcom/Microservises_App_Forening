@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bornholm_Sleagts", "ASP.NETCoreIdentityCustom\Bornholm_Sleagts.csproj", "{EA6B63C8-3F1A-407C-8D4E-13789111C192}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityUIService", "ASP.NETCoreIdentityCustom\IdentityUIService.csproj", "{EA6B63C8-3F1A-407C-8D4E-13789111C192}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FeallesService", "FeallesService\FeallesService.csproj", "{27E40F57-FEC1-48BC-A6C1-F873E7038773}"
 EndProject

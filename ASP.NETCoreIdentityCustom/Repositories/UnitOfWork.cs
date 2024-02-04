@@ -1,6 +1,6 @@
-﻿using Bornholm_Sleagts.Core.Repositories;
+﻿using IdentityUIService.Core.Repositories;
 
-namespace Bornholm_Sleagts.Repositories
+namespace IdentityUIService.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
